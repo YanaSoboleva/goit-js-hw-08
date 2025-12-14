@@ -20,20 +20,29 @@ body {
 }
 .gallery-item {
   list-style: none;
-  overflow: hidden;
+  /* overflow: hidden; */
   display: block;
   padding: 0;
+  cursor: pointer;
+  position: relative;
 }
 
 .gallery-image {
   width: 360px;
   height: 200px;
-  transition: transform 0.3s ease-in-out;
-  transform: scale(1);
+  transition: transform 0.3s ease-in-out, z-index 0s 0.3s;
   object-fit: cover;
+  /* transform: scale(1); */
+  z-index: 1;
+  position: relative;
 }
 
 .gallery-link {
   display: block;
   line-height: 0;
+}
+.gallery-link:hover img {
+  transform: scale(1.05);
+  z-index: 10;
+  transition: transform 0.3s ease-in-out, z-index 0s;
 }
