@@ -37,7 +37,3 @@ body {
   display: block;
   line-height: 0;
 }
-
-.gallery-item:hover .gallery-image {
-  /* transform: scale(1.1); */
-}

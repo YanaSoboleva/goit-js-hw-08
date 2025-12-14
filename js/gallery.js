@@ -69,7 +69,7 @@ const images = [
 // У тебе є контейнер, в який можна додати елементи галереї, і дані, за якими їх можна створити.
 // Саме час наповнювати галерею розміткою.
 
-// Використовуй масив об’єктів images і цей HTML шаблон елемента галереї та створи в JavaScript
+// Використовуй масив обєктів images і цей HTML шаблон елемента галереї та створи в JavaScript
 // коді розмітку елементів, після чого додай усю розмітку всередину ul.gallery.Не додавай інші HTML теги,
 // крім тих, що містяться в цьому шаблоні.
 //<li class="gallery-item">
@@ -82,7 +82,6 @@ const images = [
     ///>
   //</a>
 //</li>
-
 
 const container = document.querySelector('.gallery');
 const createImages = images => {
@@ -97,19 +96,12 @@ const createImages = images => {
     })
         .join('');
 }
-
 container.insertAdjacentHTML('beforeend', createImages(images));
 
-
-
 // *4 - Стилі
-
 // Додай стилізацію галереї згідно макету.
 
-
-
 // *5 - Делегування
-
 // Саме час додати функціонал прослуховування кліка по елементах галереї та отримання посилання
 // на велике зображення при кліку.Для цього використовуй прийом делегування на ul.gallery.
 // Поки що при кліку на елемент галереї виводь у консоль посилання на велике зображення,
@@ -117,24 +109,9 @@ container.insertAdjacentHTML('beforeend', createImages(images));
 
 container.addEventListener('click', onGalleryItemClick);
 
-// 3. Функція-обробник кліку
-// function onGalleryItemClick(event) {
-//     // 3.1. Скасовуємо дію за замовчуванням (перехід за посиланням <a>)
-//     event.preventDefault();
-
-//     // 3.2. Перевіряємо, чи клік відбувся саме на тегу <img>
-//     const isImageElement = event.target.classList.contains('gallery-image');
-
-//     // Якщо клік був не на зображенні, просто виходимо з функції
-//     if (!isImageElement) {
-//         return;
-//     }
-
-//     // 3.3. Якщо клік відбувся на <img>, отримуємо посилання на велике зображення
-//     // Посилання зберігається в атрибуті 'data-source' елемента <img>
-//     const largeImageUrl = event.target.dataset.source;
-// }
-
+function onGalleryItemClick(event) {
+    event.preventDefault();
+    const isImageElement = event.target.classList.contains('gallery-image');
 
 // *6 - Підключення бібліотеки
 
@@ -142,97 +119,35 @@ container.addEventListener('click', onGalleryItemClick);
 // підходить під нашу задачу.Використовуй CDN сервіс jsdelivr і додай в HTML файл посилання
 // на мініфіковані(.min) JS та CSS файли бібліотеки.
 
-
-
 // 7 - Модальне вікно
 
 // Доповни свій код так, щоб при кліку по елементу галереї відкривалось модальне вікно підключеної
 // бібліотеки. Для того щоб дізнатися, як ініціалізувати модальне вікно у своєму коді і як його
 // використовувати, ознайомся з документацією і прикладами.
 
-// 4. Створення та відкриття модального вікна basicLightbox
+    if (!isImageElement) {
+        return;
+    }
 
-    // 4.1. Створюємо розмітку для вмісту модального вікна.
-    // Тут ми використовуємо тег <img> з отриманим посиланням.
-    // const modalContent = `<img src="${largeImageUrl}" alt="${event.target.alt}">`;
-
-    // // 4.2. Ініціалізуємо (створюємо) екземпляр basicLightbox
-    // const instance = basicLightbox.create(modalContent);
-    
-    // // 4.3. Відкриваємо модальне вікно
-    // instance.show();
-
-    // // 5. Додатковий функціонал: закриття модалки клавішею Escape (опціонально, але корисно)
-    // document.addEventListener('keydown', onEscKeyPress);
-    
-    // function onEscKeyPress(e) {
-    //     if (e.key === 'Escape') {
-    //         instance.close();
-    //         // Знімаємо слухача клавіатури, щоб уникнути конфліктів
-    //         document.removeEventListener('keydown', onEscKeyPress); 
-    //     }
-    // }
-
+  const largeImageUrl = event.target.dataset.source;
+  const modalContent = `<img src="${largeImageUrl}" alt="${event.target.alt}">`;
 
 // 8 - Велике зображення
 
 // Використовуй свій код отримання посилання на велике зображення із атрибуту data - source,
 // щоб замінити значення атрибута src елемента < img > в модальному вікні перед відкриттям.
 // Використовуй готову розмітку модального вікна із зображенням із прикладів бібліотеки basicLightbox.
-// 1. Статична розмітка модального вікна, яка використовуватиметься
-// Ми використовуємо її для створення ОДНОГО екземпляра.
-const modalContent = `
-    <img class="lightbox-image" src="" alt="Large image" />
-`;
-
-// 2. Створюємо єдиний екземпляр basicLightbox поза обробником
-const instance = basicLightbox.create(modalContent, {
-    // Додаткові налаштування, якщо потрібні
-    onShow: (instance) => {
-        // Додаємо слухача клавіатури лише при відкритті
-        document.addEventListener('keydown', onEscKeyPress);
-    },
-    onClose: (instance) => {
-        // Знімаємо слухача клавіатури при закритті
-        document.removeEventListener('keydown', onEscKeyPress);
-    }
-});
-
-// Функція для закриття по Escape (використовує єдиний екземпляр)
-function onEscKeyPress(e) {
-    if (e.key === 'Escape') {
-        instance.close();
-    }
-}
-
-
-// 3. Обробник кліку
-function onGalleryItemClick(event) {
-    event.preventDefault();
-
-    const target = event.target;
-    const isImageElement = target.classList.contains('gallery-image');
-
-    if (!isImageElement) {
-        return;
-    }
-
-    // 3.1. Отримуємо посилання на велике зображення
-    const largeImageUrl = target.dataset.source;
+  
+  const instance = basicLightbox.create(modalContent);
+  instance.show(() => {
+    document.addEventListener('keydown', onEscKeyPress);
+  });
     
-    // 3.2. **ЗНАХОДИМО та ОНОВЛЮЄМО SRC**
-    // Для цього нам потрібно отримати DOM-елемент <img> всередині екземпляра basicLightbox.
-    // basicLightbox має метод .element()
-    const modalImageElement = instance.element().querySelector('.lightbox-image');
-
-    // Перевіряємо, чи знайшли ми елемент зображення
-    if (modalImageElement) {
-        // Встановлюємо нове значення атрибута src
-        modalImageElement.src = largeImageUrl;
-        // Оновлюємо атрибут alt
-        modalImageElement.alt = target.alt; 
-    }
-
-    // 3.3. Відкриваємо модальне вікно (воно вже створено, ми просто його показуємо)
-    instance.show();
+function onEscKeyPress(event) {
+  if (event.code === 'Escape') {
+    instance.close(() => {
+      document.removeEventListener('keydown', onEscKeyPress);
+    });
+  }
+  }
 }
